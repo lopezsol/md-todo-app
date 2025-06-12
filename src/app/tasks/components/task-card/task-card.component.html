@@ -1,0 +1,17 @@
+<article [class.completed]="isCompleted()">
+  <input
+    type="checkbox"
+    [checked]="isCompleted()"
+    (click)="onToggleComplete(task())"
+  />
+  <p [class.title-completed]="isCompleted()">{{ task().title }}</p>
+
+  <button>
+    <lucide-icon
+      [img]="TrashIcon"
+      size="20"
+      class="my-icon"
+      (click)="onDelete(task().id)"
+    ></lucide-icon>
+  </button>
+</article>
