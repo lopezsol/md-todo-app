@@ -1,5 +1,5 @@
 <section>
   @for (task of tasks(); track task.id) {
   <task-card [task]="task" />
-  }
+  } @empty { <task-list-empty />}
 </section>
