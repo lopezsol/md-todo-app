@@ -1,0 +1,28 @@
+section {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+p {
+  margin: 0;
+  padding: 4px 16px;
+  border: 1px solid gray;
+  border-radius: 16px;
+  width: fit-content;
+  font-size: 12px;
+}
+
+.completed {
+  background-color: var(--color-completed-bg);
+  border-color: var(--color-completed-border);
+  color: var(--color-completed-text);
+}
+
+.pending {
+  background-color: var(--color-pending-bg);
+  border-color: var(--color-pending-border);
+}

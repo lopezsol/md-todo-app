@@ -1,4 +1,4 @@
-import { Injectable, signal } from '@angular/core';
+import { computed, Injectable, signal } from '@angular/core';
 import type { Task } from '../interfaces/task.interface';
 
 @Injectable({
@@ -7,7 +7,14 @@ import type { Task } from '../interfaces/task.interface';
 export class TaskStoreService {
   private _tasks = signal<Task[]>([]);
   readonly tasks = this._tasks.asReadonly();
-  constructor() {}
+
+  readonly totalTasks = computed(() => this._tasks().length);
+  readonly completedTasks = computed(
+    () => this._tasks().filter((task) => task.completed).length
+  );
+  readonly pendingTasks = computed(
+    () => this.totalTasks() - this.completedTasks()
+  );
 
   loadTasks() {
     const tasks = [
