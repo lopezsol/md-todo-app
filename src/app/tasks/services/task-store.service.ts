@@ -40,7 +40,7 @@ export class TaskStoreService {
 
   addTask(title: string) {
     //TODO: elminir el id cuando se llame al servicio be, no va a ser necesario, el be crea el id
-    const id = (this.tasks.length + 1).toString();
+    const id = (this.tasks().length + 1).toString();
     const newTask: Task = {
       title,
       id,

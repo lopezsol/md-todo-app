@@ -1,6 +1,13 @@
 .container {
   width: 70%;
   margin: auto;
+  text-align: center;
+}
+
+div {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 }
 
 @media (width >= 768px) {
