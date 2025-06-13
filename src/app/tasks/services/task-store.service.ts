@@ -27,8 +27,7 @@ export class TaskStoreService {
         completed: false,
       },
     ];
-
-    console.log('loadTasks: ', tasks);
+    //TODO: hacer llamada al servicio be
     this._tasks.set(tasks);
   }
 
