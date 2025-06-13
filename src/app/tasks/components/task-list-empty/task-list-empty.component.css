@@ -1,0 +1,25 @@
+.empty-state {
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 32px;
+  text-align: center;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+.empty-state .my-icon {
+  margin-bottom: 16px;
+}
+
+.empty-state h4 {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+.empty-state p {
+  margin-top: 8px;
+  color: #6b7280;
+  font-size: 0.95rem;
+}
