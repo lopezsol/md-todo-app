@@ -3,6 +3,7 @@
     <input
       formControlName="title"
       placeholder="Escribe el título de tu nueva tarea..."
+      #titleInput
     />
     <div class="error-container">
       @if (formUtils.isInvalidField(taskForm, 'title')) {
