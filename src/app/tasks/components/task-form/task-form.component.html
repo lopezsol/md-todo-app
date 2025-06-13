@@ -1,7 +1,17 @@
 <form (ngSubmit)="onSubmit()" [formGroup]="taskForm">
-  <input
-    formControlName="title"
-    placeholder="Escribe el título de tu nueva tarea..."
-  />
+  <div class="input-group">
+    <input
+      formControlName="title"
+      placeholder="Escribe el título de tu nueva tarea..."
+    />
+    <div class="error-container">
+      @if (formUtils.isInvalidField(taskForm, 'title')) {
+      <p class="error-message">
+        {{ formUtils.getFieldError(taskForm, "title") }}
+      </p>
+      }
+    </div>
+  </div>
+
   <button [disabled]="taskForm.invalid">Agregar</button>
 </form>

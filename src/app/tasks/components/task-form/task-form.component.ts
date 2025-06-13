@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TaskStoreService } from '../../services/task-store.service';
+import { FormUtils } from '../../../utils/form-utils';
 
 @Component({
   selector: 'task-form',
@@ -11,9 +12,18 @@ import { TaskStoreService } from '../../services/task-store.service';
 export class TaskFormComponent {
   fb = inject(FormBuilder);
   taskStore = inject(TaskStoreService);
+  formUtils = FormUtils;
 
   taskForm = this.fb.group({
-    title: ['', [Validators.required, Validators.minLength(3)]],
+    title: [
+      '',
+      [
+        Validators.required,
+        Validators.maxLength(50),
+        FormUtils.noWhitespaceValidator,
+        FormUtils.minTrimmedLength(3),
+      ],
+    ],
   });
 
   onSubmit() {
