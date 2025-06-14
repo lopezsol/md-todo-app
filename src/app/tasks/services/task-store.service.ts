@@ -42,6 +42,7 @@ export class TaskStoreService {
     // this.taskService.deleteTask(id).subscribe(() => this.fetchTasks());
 
     //TODO: preguntar cual es mejor opcion
+    id = '1234';
     this.taskService
       .deleteTask(id)
       .subscribe(() =>
