@@ -24,7 +24,6 @@ form {
   color: var(--color-error-text);
   font-size: 0.875rem;
   margin: 0;
-  text-align: start;
 }
 
 input {

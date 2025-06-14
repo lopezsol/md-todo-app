@@ -6,12 +6,7 @@
   />
   <p [class.title-completed]="isCompleted()">{{ task().title }}</p>
 
-  <button>
-    <lucide-icon
-      [img]="TrashIcon"
-      size="20"
-      class="my-icon"
-      (click)="onDelete(task().id)"
-    ></lucide-icon>
+  <button (click)="onDelete(task().id)">
+    <lucide-icon [img]="TrashIcon" size="20" class="my-icon"></lucide-icon>
   </button>
 </article>
