@@ -5,9 +5,19 @@ article {
   flex-direction: row;
   padding: 16px;
   align-items: center;
-  gap: 8px;
+  gap: 16px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   background: var(--color-pending-bg);
+}
+
+div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  cursor: pointer;
+
 }
 
 p {
@@ -17,7 +27,6 @@ p {
 input {
   width: 18px;
   height: 18px;
-  cursor: pointer;
   accent-color: black;
 }
 button {
