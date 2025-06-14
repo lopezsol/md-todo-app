@@ -1,5 +1,5 @@
 <article [class.completed]="isCompleted()">
-  <div (click)="onToggleComplete(task())">
+  <div (click)="onToggleCompleted(task())">
     <input type="checkbox" [checked]="isCompleted()" />
     <p [class.title-completed]="isCompleted()">{{ task().title }}</p>
   </div>

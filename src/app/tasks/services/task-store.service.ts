@@ -1,10 +1,13 @@
-import { computed, Injectable, signal } from '@angular/core';
+import { computed, inject, Injectable, signal } from '@angular/core';
 import type { Task } from '../interfaces/task.interface';
+import { TaskService } from './task.service';
+import { CreateTaskDto } from '../interfaces/create-task-dto.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TaskStoreService {
+  private taskService = inject(TaskService);
   private _tasks = signal<Task[]>([]);
   readonly tasks = this._tasks.asReadonly();
 
@@ -16,46 +19,36 @@ export class TaskStoreService {
     () => this.totalTasks() - this.completedTasks()
   );
 
-  loadTasks() {
-    const tasks = [
-      {
-        id: 'f38d10e4-3a15-4141-af1b-60e5482346ba',
-        title: 'Comprar pan',
-        completed: true,
-      },
-      {
-        id: '263abb95-311d-4c14-9435-e4fcead92298',
-        title: 'Estudiar Angular',
-        completed: false,
-      },
-      {
-        id: '0768ddb4-a47d-4ea5-b519-5eae87d96664',
-        title: 'Hacer ejercicio con muchas ganas',
-        completed: false,
-      },
-    ];
-    //TODO: hacer llamada al servicio be
-    this._tasks.set(tasks);
+  fetchTasks() {
+    this.taskService.findAll().subscribe((tasks) => {
+      this._tasks.set(tasks);
+    });
   }
 
   addTask(title: string) {
-    //TODO: elminir el id cuando se llame al servicio be, no va a ser necesario, el be crea el id
-    const id = (this.tasks().length + 1).toString();
-    const newTask: Task = {
+    const newTask: CreateTaskDto = {
       title,
-      id,
       completed: false,
     };
-    //TODO: hacer llamada al servicio be
-    this._tasks.update((tasks) => [...tasks, newTask]);
+    this.taskService.add(newTask).subscribe(() => this.fetchTasks());
+    //TODO: preguntar cual es mejor opcion
+    //   this.taskService
+    //     .add(newTask)
+    //     .subscribe((task) => this._tasks.update((tasks) => [...tasks, task]));
   }
 
   deleteTask(id: string) {
-    //TODO: hacer llamada al servicio be
-    this._tasks.update((tasks) => tasks.filter((task) => task.id !== id));
+    this.taskService.delete(id).subscribe(() => this.fetchTasks());
+
+    //TODO: preguntar cual es mejor opcion
+    // this.taskService
+    //   .delete(id)
+    //   .subscribe(() =>
+    //     this._tasks.update((tasks) => tasks.filter((task) => task.id !== id))
+    //   );
   }
 
-  toggleComplete(task: Task) {
+  toggleCompleted(task: Task) {
     const updatedTask = {
       id: task.id,
       title: task.title,

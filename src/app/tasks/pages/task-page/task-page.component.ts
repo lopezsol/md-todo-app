@@ -1,8 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { TaskListComponent } from '../../components/task-list/task-list.component';
 import { TaskStoreService } from '../../services/task-store.service';
-import { TaskFormComponent } from "../../components/task-form/task-form.component";
-import { TaskStatsComponent } from "../../components/task-stats/task-stats.component";
+import { TaskFormComponent } from '../../components/task-form/task-form.component';
+import { TaskStatsComponent } from '../../components/task-stats/task-stats.component';
 
 @Component({
   selector: 'task-page',
@@ -14,6 +14,6 @@ export class TaskPageComponent {
   taskStore = inject(TaskStoreService);
 
   ngOnInit() {
-    this.taskStore.loadTasks();
+    this.taskStore.fetchTasks();
   }
 }

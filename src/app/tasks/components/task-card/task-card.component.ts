@@ -19,7 +19,7 @@ export class TaskCardComponent {
   onDelete(id: string) {
     this.taskStore.deleteTask(id);
   }
-  onToggleComplete(task: Task) {
-    this.taskStore.toggleComplete(task);
+  onToggleCompleted(task: Task) {
+    this.taskStore.toggleCompleted(task);
   }
 }
