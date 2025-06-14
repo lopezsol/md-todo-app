@@ -12,15 +12,19 @@ export const baseUrl = environment.API_URL;
 export class TaskService {
   private http = inject(HttpClient);
 
-  findAll(): Observable<Task[]> {
+  findAllTasks(): Observable<Task[]> {
     return this.http.get<Task[]>(`${baseUrl}/todo`);
   }
 
-  add(task: CreateTaskDto): Observable<Task> {
+  addTask(task: CreateTaskDto): Observable<Task> {
     return this.http.post<Task>(`${baseUrl}/todo`, task);
   }
 
-  delete(id: string): Observable<string> {
+  deleteTask(id: string): Observable<string> {
     return this.http.delete<string>(`${baseUrl}/todo/${id}`);
+  }
+
+  updateTask(id: string, task: Partial<Task>) {
+    return this.http.patch<Task>(`${baseUrl}/todo/${id}`, task);
   }
 }

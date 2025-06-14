@@ -8,6 +8,7 @@ import { CreateTaskDto } from '../interfaces/create-task-dto.interface';
 })
 export class TaskStoreService {
   private taskService = inject(TaskService);
+
   private _tasks = signal<Task[]>([]);
   readonly tasks = this._tasks.asReadonly();
 
@@ -20,7 +21,7 @@ export class TaskStoreService {
   );
 
   fetchTasks() {
-    this.taskService.findAll().subscribe((tasks) => {
+    this.taskService.findAllTasks().subscribe((tasks) => {
       this._tasks.set(tasks);
     });
   }
@@ -30,35 +31,38 @@ export class TaskStoreService {
       title,
       completed: false,
     };
-    this.taskService.add(newTask).subscribe(() => this.fetchTasks());
+    // this.taskService.addTask(newTask).subscribe(() => this.fetchTasks());
     //TODO: preguntar cual es mejor opcion
-    //   this.taskService
-    //     .add(newTask)
-    //     .subscribe((task) => this._tasks.update((tasks) => [...tasks, task]));
+    this.taskService
+      .addTask(newTask)
+      .subscribe((task) => this._tasks.update((tasks) => [...tasks, task]));
   }
 
   deleteTask(id: string) {
-    this.taskService.delete(id).subscribe(() => this.fetchTasks());
+    // this.taskService.deleteTask(id).subscribe(() => this.fetchTasks());
 
     //TODO: preguntar cual es mejor opcion
-    // this.taskService
-    //   .delete(id)
-    //   .subscribe(() =>
-    //     this._tasks.update((tasks) => tasks.filter((task) => task.id !== id))
-    //   );
+    this.taskService
+      .deleteTask(id)
+      .subscribe(() =>
+        this._tasks.update((tasks) => tasks.filter((task) => task.id !== id))
+      );
   }
 
   toggleCompleted(task: Task) {
-    const updatedTask = {
-      id: task.id,
-      title: task.title,
-      completed: !task.completed,
-    };
-    //TODO: hacer llamada al servicio be
-    this._tasks.update((tasks) =>
-      tasks.map((t) =>
-        t.id === task.id ? { ...t, completed: !t.completed } : t
-      )
-    );
+    const { id, completed } = task;
+
+    this.taskService
+      .updateTask(id, { completed: !completed })
+      .subscribe((taskResponse) =>
+        this._tasks.update((tasks) =>
+          tasks.map((t) => (t.id === id ? taskResponse : t))
+        )
+      );
+    //TODO: preguntar cual es mejor opcion
+
+    // this.taskService
+    //   .updateTask(id, { completed: !completed })
+    //   .subscribe(() => this.fetchTasks());
   }
 }
