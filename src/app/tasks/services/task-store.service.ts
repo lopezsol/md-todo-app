@@ -1,4 +1,4 @@
-import { Injectable, signal } from '@angular/core';
+import { computed, Injectable, signal } from '@angular/core';
 import type { Task } from '../interfaces/task.interface';
 
 @Injectable({
@@ -7,7 +7,14 @@ import type { Task } from '../interfaces/task.interface';
 export class TaskStoreService {
   private _tasks = signal<Task[]>([]);
   readonly tasks = this._tasks.asReadonly();
-  constructor() {}
+
+  readonly totalTasks = computed(() => this._tasks().length);
+  readonly completedTasks = computed(
+    () => this._tasks().filter((task) => task.completed).length
+  );
+  readonly pendingTasks = computed(
+    () => this.totalTasks() - this.completedTasks()
+  );
 
   loadTasks() {
     const tasks = [
@@ -33,7 +40,7 @@ export class TaskStoreService {
 
   addTask(title: string) {
     //TODO: elminir el id cuando se llame al servicio be, no va a ser necesario, el be crea el id
-    const id = (this.tasks.length + 1).toString();
+    const id = (this.tasks().length + 1).toString();
     const newTask: Task = {
       title,
       id,

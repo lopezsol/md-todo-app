@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, ElementRef, inject, ViewChild } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TaskStoreService } from '../../services/task-store.service';
 import { FormUtils } from '../../../utils/form-utils';
@@ -13,7 +13,8 @@ export class TaskFormComponent {
   fb = inject(FormBuilder);
   taskStore = inject(TaskStoreService);
   formUtils = FormUtils;
-
+  @ViewChild('titleInput') titleInputRef!: ElementRef<HTMLInputElement>;
+  
   taskForm = this.fb.group({
     title: [
       '',
@@ -29,6 +30,7 @@ export class TaskFormComponent {
   onSubmit() {
     const title = this.taskForm.value.title?.trim();
     this.taskStore.addTask(title!);
+    this.titleInputRef.nativeElement.blur();
     this.taskForm.reset();
   }
 }

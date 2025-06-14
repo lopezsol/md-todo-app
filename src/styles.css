@@ -1,3 +1,28 @@
+:root {
+  /* Completed tasks */
+  --color-completed-bg: #f0fdf4;
+  --color-completed-border: #22c55e;
+  --color-completed-text: #198842;
+
+  /* Pending tasks (ejemplo) */
+  --color-pending-bg: #fff;
+  --color-pending-border: #c6c6c9;
+  --color-pending-text: #111827;
+
+  /* General text colors */
+  --color-text-primary: #111827;
+  --color-text-muted: #6b7280;
+  --color-disabled-bg: #6b7280;
+
+  /* Otros posibles estados */
+  --color-error-bg: #fee2e2;
+  --color-error-text: #b91c1c;
+  --color-error-border: #dc2626;
+
+  --color-placeholder:#9ca3af;
+
+}
+
 * {
   box-sizing: border-box;
 }
