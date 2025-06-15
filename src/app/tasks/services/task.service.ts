@@ -1,9 +1,9 @@
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { catchError, map, Observable, throwError } from 'rxjs';
+import { catchError, Observable, throwError } from 'rxjs';
 import type { Task } from '../interfaces/task.interface';
-import { CreateTaskDto } from '../interfaces/create-task-dto.interface';
+import type { CreateTaskDto } from '../interfaces/create-task-dto.interface';
 
 export const baseUrl = environment.API_URL;
 @Injectable({
@@ -44,7 +44,6 @@ export class TaskService {
         error.status === 0
           ? 'No se pudo conectar con el servidor.'
           : error.error?.message || 'Ocurrió un error inesperado.';
-
       return throwError(() => new Error(message));
     };
   }
