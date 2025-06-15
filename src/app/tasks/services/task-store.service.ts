@@ -54,7 +54,6 @@ export class TaskStoreService {
   }
 
   deleteTask(id: string) {
-    id = '123';
     const obs$ = this.taskService.deleteTask(id);
     const onSuccess = () => {
       this._tasks.update((tasks) => tasks.filter((task) => task.id !== id));
@@ -94,36 +93,47 @@ export class TaskStoreService {
       onComplete?: () => void;
     }
   ) {
-    this.isLoading.set(true);
-    this.hasError.set(false);
-    this.error.set('');
+    this.startLoading();
 
     obs$.subscribe({
-      next: (res) => {
-        config.onSuccess(res);
-        this.isLoading.set(false);
-      },
-      error: (err) => {
-        this.hasError.set(true);
-
-        const devMessage = err?.message || 'Unexpected error';
-        console.error(`[${config.errorMessage}]`, devMessage); // Solo en consola
-
-        const userMessage =
-          `${config.errorMessage}. Por favor, intenta más tarde.` ||
-          'Ocurrió un error inesperado.';
-        this.error.set(userMessage);
-
-        this.error.set(userMessage);
-        console.log(userMessage);
-        this.isLoading.set(false);
-
-        if (config.onError) config.onError(err);
-      },
-      complete: () => {
-        if (config.onComplete) config.onComplete();
-      },
+      next: (res) => this.handleSuccess(res, config.onSuccess),
+      error: (err) =>
+        this.handleError(err, config.errorMessage, config.onError),
+      complete: () => this.handleComplete(config.onComplete),
     });
   }
 
+  private startLoading() {
+    this.isLoading.set(true);
+    this.hasError.set(false);
+    this.error.set('');
+  }
+
+  private handleSuccess<T>(value: T, onSuccess: (value: T) => void) {
+    onSuccess(value);
+    this.isLoading.set(false);
+  }
+
+  private handleError(
+    err: any,
+    configErrorMessage?: string,
+    onError?: (err: any) => void
+  ) {
+    this.hasError.set(true);
+    this.isLoading.set(false);
+
+    const devMessage = err?.message || 'Unexpected error';
+    console.error(`[${configErrorMessage}]`, devMessage); 
+
+    const userMessage =
+      configErrorMessage?.concat('. Por favor, intenta más tarde.') ||
+      'Ocurrió un error inesperado.';
+    this.error.set(userMessage);
+
+    if (onError) onError(err);
+  }
+
+  private handleComplete(onComplete?: () => void) {
+    if (onComplete) onComplete();
+  }
 }
