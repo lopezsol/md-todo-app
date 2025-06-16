@@ -1,13 +1,12 @@
 import { Component, effect, inject, Signal, signal } from '@angular/core';
 import { TaskListComponent } from '../../components/task-list/task-list.component';
-import { TaskStoreService } from '../../services/task-store.service';
 import { TaskFormComponent } from '../../components/task-form/task-form.component';
 import { TaskStatsComponent } from '../../components/task-stats/task-stats.component';
 import { LoaderComponent } from '../../../shared/components/loader/loader.component';
 import { TaskService } from '../../services/task.service';
-import { Task } from '../../interfaces/task.interface';
 import { useObservable } from '../../../shared/helpers/use-observable.helper';
-import { CreateTaskDto } from '../../interfaces/create-task-dto.interface';
+import type { Task } from '../../interfaces/task.interface';
+import type { CreateTaskDto } from '../../interfaces/create-task-dto.interface';
 
 @Component({
   selector: 'task-page',
@@ -22,7 +21,6 @@ import { CreateTaskDto } from '../../interfaces/create-task-dto.interface';
 })
 // TaskPageComponent
 export class TaskPageComponent {
-  taskStore = inject(TaskStoreService);
   taskService = inject(TaskService);
 
   tasks = signal<Task[]>([]);

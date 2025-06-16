@@ -6,9 +6,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { TaskStoreService } from '../../services/task-store.service';
 import { FormUtils } from '../../../utils/form-utils';
-import { Task } from '../../interfaces/task.interface';
 
 @Component({
   selector: 'task-form',
@@ -18,7 +16,6 @@ import { Task } from '../../interfaces/task.interface';
 })
 export class TaskFormComponent {
   fb = inject(FormBuilder);
-  taskStore = inject(TaskStoreService);
   newTask = output<string>();
 
   formUtils = FormUtils;
@@ -38,7 +35,6 @@ export class TaskFormComponent {
 
   onSubmit() {
     const title = this.taskForm.value.title?.trim();
-    // this.taskStore.addTask(title!);
     this.newTask.emit(title!)
     this.titleInputRef.nativeElement.blur();
     this.taskForm.reset();

@@ -1,14 +1,11 @@
 import {
   Component,
   computed,
-  inject,
   input,
   output,
- 
 } from '@angular/core';
-import type { Task } from '../../interfaces/task.interface';
-import { TaskStoreService } from '../../services/task-store.service';
 import { LucideAngularModule, Trash2 } from 'lucide-angular';
+import type { Task } from '../../interfaces/task.interface';
 
 @Component({
   selector: 'task-card',
@@ -17,7 +14,6 @@ import { LucideAngularModule, Trash2 } from 'lucide-angular';
   styleUrl: './task-card.component.css',
 })
 export class TaskCardComponent {
-  taskStore = inject(TaskStoreService);
   readonly TrashIcon = Trash2;
 
   task = input.required<Task>();
