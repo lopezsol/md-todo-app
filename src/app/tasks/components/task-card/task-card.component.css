@@ -28,6 +28,8 @@ input {
   width: 18px;
   height: 18px;
   accent-color: black;
+  cursor: pointer;
+  
 }
 button {
   margin-left: auto;
