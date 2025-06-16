@@ -1,4 +1,11 @@
-import { Component, computed, inject, input } from '@angular/core';
+import {
+  Component,
+  computed,
+  inject,
+  input,
+  output,
+ 
+} from '@angular/core';
 import type { Task } from '../../interfaces/task.interface';
 import { TaskStoreService } from '../../services/task-store.service';
 import { LucideAngularModule, Trash2 } from 'lucide-angular';
@@ -16,10 +23,13 @@ export class TaskCardComponent {
   task = input.required<Task>();
   isCompleted = computed(() => this.task().completed);
 
+  deletedTask = output<string>();
+  updatedTask = output<Task>();
+
   onDelete(id: string) {
-    this.taskStore.deleteTask(id);
+    this.deletedTask.emit(id);
   }
   onToggleCompleted(task: Task) {
-    this.taskStore.toggleCompleted(task);
+    this.updatedTask.emit(task);
   }
 }

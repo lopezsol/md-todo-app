@@ -36,6 +36,18 @@ export class TaskStoreService {
     });
   }
 
+  //   fetchTasks() {
+  //   const obs$ = this.taskService.findAllTasks();
+  //   const onSuccess = (tasks: Task[]) => {
+  //     this._tasks.set(tasks);
+  //   };
+
+  //   return useObservable(obs$, {
+  //     onSuccess,
+  //     errorMessage: 'Error al obtener las tareas',
+  //   });
+  // }
+
   addTask(title: string) {
     const newTask: CreateTaskDto = { title, completed: false };
 

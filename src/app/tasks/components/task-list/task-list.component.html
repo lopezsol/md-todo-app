@@ -1,5 +1,9 @@
 <section>
   @for (task of tasks(); track task.id) {
-  <task-card [task]="task" />
+  <task-card
+    [task]="task"
+    (deletedTask)="onDelete($event)"
+    (updatedTask)="onToggleCompleted($event)"
+  />
   } @empty { <task-list-empty />}
 </section>
