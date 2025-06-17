@@ -1,4 +1,4 @@
-import { Component, computed, inject, input } from '@angular/core';
+import { Component, computed, input } from '@angular/core';
 import type { Task } from '../../interfaces/task.interface';
 
 @Component({
