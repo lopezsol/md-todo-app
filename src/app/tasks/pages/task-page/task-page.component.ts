@@ -3,8 +3,9 @@ import { TaskListComponent } from '../../components/task-list/task-list.componen
 import { TaskFormComponent } from '../../components/task-form/task-form.component';
 import { TaskStatsComponent } from '../../components/task-stats/task-stats.component';
 import { LoaderComponent } from '../../../shared/components/loader/loader.component';
-import { TaskService } from '../../services/task.service';
+import { SnackbarErrorComponent } from "../../../shared/components/snackbar-error/snackbar-error.component";
 import { useObservable } from '../../../shared/helpers/use-observable.helper';
+import { TaskService } from '../../services/task.service';
 import type { Task } from '../../interfaces/task.interface';
 import type { CreateTaskDto } from '../../interfaces/create-task-dto.interface';
 
@@ -15,7 +16,8 @@ import type { CreateTaskDto } from '../../interfaces/create-task-dto.interface';
     TaskFormComponent,
     TaskStatsComponent,
     LoaderComponent,
-  ],
+    SnackbarErrorComponent
+],
   templateUrl: './task-page.component.html',
   styleUrl: './task-page.component.css',
 })

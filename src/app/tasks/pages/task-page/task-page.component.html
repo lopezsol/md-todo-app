@@ -14,5 +14,5 @@
 @if (isLoading()) {
 <app-loader />
 } @if (hasError()) {
-<p>{{ error() }}</p>
+<app-snackbar-error [snackbarMessage]="error()" />
 }
