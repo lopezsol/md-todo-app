@@ -1,26 +1,24 @@
-import { signal, type Signal } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Observer } from 'rxjs';
+import type { UseObservableConfig } from '../interfaces/use-observable-config.interface';
 
-export function useObservable<T>(
-  obs$: Observable<T>,
-  config: {
-    onSuccess: (value: T) => void;
-    onError?: (err: unknown) => void;
-    errorMessage?: string;
-    onComplete?: () => void;
-  }
-): {
-  isLoading: Signal<boolean>;
-  hasError: Signal<boolean>;
-  error: Signal<string>;
-} {
-  const isLoading = signal(true);
-  const hasError = signal(false);
-  const error = signal('');
+export function useObservable<T>(obs$: Observable<T>, config: UseObservableConfig<T>) {
+  const { isLoading, hasError, error } = config.signals;
 
-  obs$.subscribe({
+  isLoading.set(true);
+  hasError.set(false);
+  error.set('');
+
+  const observer = createObserver(config);
+  obs$.subscribe(observer);
+}
+
+function createObserver<T>(config: UseObservableConfig<T>): Observer<T> {
+  const { onSuccess, onError, onComplete, errorMessage, signals } = config;
+  const { isLoading, hasError, error } = signals;
+
+  return {
     next: (res) => {
-      config.onSuccess(res);
+      onSuccess(res);
       isLoading.set(false);
     },
     error: (err) => {
@@ -28,23 +26,17 @@ export function useObservable<T>(
       isLoading.set(false);
 
       const devMessage = err?.message || 'Unexpected error';
-      console.error(`[${config.errorMessage}]`, devMessage);
+      console.error(devMessage);
 
       const userMessage =
-        config.errorMessage?.concat('. Por favor, intenta más tarde.') ||
+        errorMessage?.concat('. Por favor, intenta más tarde.') ||
         'Ocurrió un error inesperado.';
       error.set(userMessage);
 
-      if (config.onError) config.onError(err);
+      if (onError) onError(err);
     },
     complete: () => {
-      if (config.onComplete) config.onComplete();
+      if (onComplete) onComplete();
     },
-  });
-
-  return {
-    isLoading: isLoading.asReadonly(),
-    hasError: hasError.asReadonly(),
-    error: error.asReadonly(),
   };
 }
