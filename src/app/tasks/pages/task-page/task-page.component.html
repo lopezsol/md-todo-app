@@ -2,8 +2,17 @@
   <h1>Gestor de Tareas</h1>
   <p>Organiza y gestiona tus tareas de manera eficiente</p>
   <div>
-    <task-stats />
-    <task-form />
-    <task-list />
+    <task-stats [tasks]="tasks()" />
+    <task-form (newTask)="addTask($event)" />
+    <task-list
+      [tasks]="tasks()"
+      (deletedTask)="deleteTask($event)"
+      (updatedTask)="toggleCompleted($event)"
+    />
   </div>
 </main>
+@if (isLoading()) {
+<app-loader />
+} @if (hasError()) {
+<app-snackbar-error [snackbarMessage]="error()" />
+}

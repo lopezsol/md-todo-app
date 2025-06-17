@@ -1,5 +1,5 @@
 .container {
-  width: 70%;
+  width: 90%;
   margin: auto;
   margin-bottom: 48px;
 }
@@ -12,6 +12,13 @@ div {
   display: flex;
   flex-direction: column;
   gap: 24px;
+}
+
+
+@media (width >= 500px) {
+  .container {
+    width: 70%;
+  }
 }
 
 @media (width >= 768px) {

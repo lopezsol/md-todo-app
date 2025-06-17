@@ -1,7 +1,11 @@
-import { Component, computed, inject, input } from '@angular/core';
-import type { Task } from '../../interfaces/task.interface';
-import { TaskStoreService } from '../../services/task-store.service';
+import {
+  Component,
+  computed,
+  input,
+  output,
+} from '@angular/core';
 import { LucideAngularModule, Trash2 } from 'lucide-angular';
+import type { Task } from '../../interfaces/task.interface';
 
 @Component({
   selector: 'task-card',
@@ -10,16 +14,18 @@ import { LucideAngularModule, Trash2 } from 'lucide-angular';
   styleUrl: './task-card.component.css',
 })
 export class TaskCardComponent {
-  taskStore = inject(TaskStoreService);
   readonly TrashIcon = Trash2;
 
   task = input.required<Task>();
   isCompleted = computed(() => this.task().completed);
 
+  deletedTask = output<string>();
+  updatedTask = output<Task>();
+
   onDelete(id: string) {
-    this.taskStore.deleteTask(id);
+    this.deletedTask.emit(id);
   }
-  onToggleComplete(task: Task) {
-    this.taskStore.toggleComplete(task);
+  onToggleCompleted(task: Task) {
+    this.updatedTask.emit(task);
   }
 }

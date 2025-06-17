@@ -1,5 +1,5 @@
-import { Component, inject } from '@angular/core';
-import { TaskStoreService } from '../../services/task-store.service';
+import { Component, computed, input } from '@angular/core';
+import type { Task } from '../../interfaces/task.interface';
 
 @Component({
   selector: 'task-stats',
@@ -8,8 +8,11 @@ import { TaskStoreService } from '../../services/task-store.service';
   styleUrl: './task-stats.component.css',
 })
 export class TaskStatsComponent {
-  taskStore = inject(TaskStoreService);
-  totalTasks = this.taskStore.totalTasks;
-  completedTasks = this.taskStore.completedTasks;
-  pendingTasks = this.taskStore.pendingTasks;
+  tasks = input.required<Task[]>();
+
+  totalTasks = computed(() => this.tasks().length);
+  completedTasks = computed(
+    () => this.tasks().filter((task) => task.completed).length
+  );
+  pendingTasks = computed(() => this.totalTasks() - this.completedTasks());
 }
