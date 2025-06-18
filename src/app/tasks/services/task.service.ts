@@ -14,25 +14,25 @@ export class TaskService {
 
   findAllTasks(): Observable<Task[]> {
     return this.http
-      .get<Task[]>(`${baseUrl}/todo`)
+      .get<Task[]>(`${baseUrl}/todos`)
       .pipe(catchError(this.handleError('Fetching tasks')));
   }
 
   addTask(task: CreateTaskDto): Observable<Task> {
     return this.http
-      .post<Task>(`${baseUrl}/todo`, task)
+      .post<Task>(`${baseUrl}/todos`, task)
       .pipe(catchError(this.handleError('Adding task')));
   }
 
   deleteTask(id: string): Observable<string> {
     return this.http
-      .delete<string>(`${baseUrl}/todo/${id}`)
+      .delete<string>(`${baseUrl}/todos/${id}`)
       .pipe(catchError(this.handleError('Deleting task')));
   }
 
   updateTask(id: string, task: Partial<Task>): Observable<Task> {
     return this.http
-      .patch<Task>(`${baseUrl}/todo/${id}`, task)
+      .patch<Task>(`${baseUrl}/todos/${id}`, task)
       .pipe(catchError(this.handleError('Updating task')));
   }
 
